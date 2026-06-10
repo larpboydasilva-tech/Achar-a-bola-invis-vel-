@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Jogo Encontrei</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.js"></script>
+</head>
+<body>
+
+<script>
+let x;
+let y;
+let encontrou = false;
+
+function setup() {
+  createCanvas(400, 400);
+
+  x = random(10, width - 10);
+  y = random(10, height - 10);
+
+  textSize(24);
+  textAlign(CENTER, CENTER);
+}
+
+function draw() {
+  background(220);
+
+  if (!encontrou) {
+    // Movimento aleatório do alvo
+    x += random(-2, 2);
+    y += random(-2, 2);
+
+    // Mantém dentro da tela
+    x = constrain(x, 10, width - 10);
+    y = constrain(y, 10, height - 10);
+
+    // Distância entre mouse e alvo
+    let distancia = dist(mouseX, mouseY, x, y);
+
+    // Indicador de proximidade
+    noFill();
+    stroke(0);
+    circle(mouseX, mouseY, min(distancia, 200));
+
+    // Vitória
+    if (distancia < 10) {
+      encontrou = true;
+    }
+  }
+
+  if (encontrou) {
+    fill(0);
+    noStroke();
+    text("🎉 Encontrei!", width / 2, height / 2);
+  }
+}
+</script>
+
+</body>
+</html>
